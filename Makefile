@@ -3,7 +3,7 @@ install:
 	source .venv/bin/activate
 	uv sync
 
-inspect:
+run:
 	uv run mcp dev server.py
 
 claude:

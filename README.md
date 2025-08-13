@@ -2,6 +2,14 @@
 
 A Model Context Protocol (MCP) server for creating Trello cards and lists.
 
+This project was built for the Austin Python Community Meetup to demonstrate how to create a simple MCP server that integrates with external APIs. It showcases the power of MCP in enabling natural language interactions with Trello through Claude Desktop, making project management more intuitive and accessible.
+
+## Architecture
+
+![MCP Architecture](architecture.png)
+
+The MCP server acts as a bridge between Claude Desktop and the Trello API, translating natural language requests into structured API calls. Users can interact with their Trello boards using conversational language, while the server handles authentication, API communication, and response formatting behind the scenes.
+
 ## Features
 
 - **`create_trello_card`**: Create a card in a specific Trello board
@@ -40,12 +48,21 @@ export TRELLO_API_KEY="your_api_key_here"
 export TRELLO_TOKEN="your_token_here"
 ```
 
-### 3. Install and Setup Enviroment
+#### 3. Install and Setup Enviroment
 
-Install uv: `brew install uv`
-Create (venv) enviroment: `uv venv`
-Activate enviroment: `source .venv/bin/activate`
-Install Dependencies: `uv sync`
+1. Install uv: `brew install uv`
+2. Create (venv) enviroment: `uv venv`
+3. Activate enviroment: `source .venv/bin/activate`
+4. Install Dependencies: `uv sync`
+
+### Using a Makefile 
+
+There is a Makefile you could use to make your life easier, defined rules are:
+
+ - `make install` - to create enviroment and install dependencies
+ - `make run` - To run and inspect mcp server
+ - `make claude` - To install mcp server (in dev mode) to local Claude Desktop
+
 
 ## Usage
 
