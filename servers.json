@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "trello": {
+            "command": "uv",
+            "args": [
+                "run",
+                "server.py"
+            ]
+        }
+    }
+}
