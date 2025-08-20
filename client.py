@@ -58,7 +58,7 @@ class MCPClient:
     async def connect_to_servers(self):
         """Connect to all configured MCP servers."""
         try:
-            with open("servers.json", "r") as file:
+            with open("remote_servers.json", "r") as file:
                 data = json.load(file)
             
             servers = data.get("mcpServers", {})

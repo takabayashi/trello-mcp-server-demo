@@ -10,6 +10,20 @@ This project was built for the Austin Python Community Meetup to demonstrate how
 
 The MCP server acts as a bridge between Claude Desktop and the Trello API, translating natural language requests into structured API calls. Users can interact with their Trello boards using conversational language, while the server handles authentication, API communication, and response formatting behind the scenes.
 
+## Project Structure
+
+```
+trello-mcp-server-demo/
+├── server.py              # Main MCP server implementation
+├── client.py              # Custom MCP client for testing
+├── servers.json           # MCP server configuration
+├── remote_servers.json    # Additional MCP server configurations
+├── pyproject.toml         # Python project configuration
+├── Makefile               # Build and run commands
+├── README.md              # This documentation
+└── architecture.png       # Architecture diagram
+```
+
 ## Features
 
 - **`create_trello_card`**: Create a card in a specific Trello board
@@ -62,6 +76,7 @@ There is a Makefile you could use to make your life easier, defined rules are:
  - `make install` - to create enviroment and install dependencies
  - `make run` - To run and inspect mcp server
  - `make claude` - To install mcp server (in dev mode) to local Claude Desktop
+ - `make client` - To run the MCP client for interactive testing
 
 
 ## Usage
@@ -76,6 +91,73 @@ Inspector will open in a browser tab. you can connect and test the tools and res
 ### Integrate with MCP Client (Claude Desktop)
 ```bash
 uv run mcp install --with-editable server.py -f .env
+```
+
+### Using the MCP Client
+
+The project includes a custom MCP client (`client.py`) that allows you to interact with the Trello MCP server programmatically:
+
+```bash
+uv run client.py
+```
+
+The client will:
+1. Load server configurations from `servers.json`
+2. Connect to all configured MCP servers
+3. Start an interactive chat loop where you can ask questions in natural language
+4. Automatically use the appropriate tools based on your requests
+
+Example interactions:
+```
+Query: Show me all my Trello boards
+Query: Create a new list called "In Progress" in my "Project Alpha" board
+Query: Add a task called "Fix login bug" to my "Project Alpha" board
+```
+
+## Configuration Files
+
+### servers.json
+This file configures the MCP servers for the client:
+
+```json
+{
+    "mcpServers": {
+        "trello": {
+            "command": "uv",
+            "args": [
+                "run",
+                "server.py"
+            ]
+        }
+    }
+}
+```
+
+### remote_servers.json
+This file configures additional MCP servers (like filesystem access):
+
+```json
+{
+    "mcpServers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "."
+            ]
+        }
+    }
+}
+```
+
+### Environment Variables
+The client automatically loads environment variables from a `.env` file. Make sure your Trello credentials and Anthropic apikey are set:
+
+```bash
+TRELLO_API_KEY=your_api_key_here
+TRELLO_TOKEN=your_token_here
+ANTHROPIC_API_KEY=your_apikey_here
 ```
 
 
